@@ -8,8 +8,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
-                <div class="bg-white shadow-xl rounded-lg p-10 w-full max-w-md border border-gray-100 no-print">
-                    <div class="text-center mb-8">
+                <div class="bg-white shadow-xl rounded-lg p-10 w-full max-w-md border border-gray-100">
+                    <div class="text-center mb-8 no-print">
                         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -20,7 +20,7 @@
                     </div>
 
                     <!-- Virtual Receipt -->
-                    <div class="bg-gray-50 border-2 border-dashed border-gray-200 p-6 font-mono text-xs text-gray-700 rounded-sm">
+                    <div id="receipt-area" class="bg-gray-50 border-2 border-dashed border-gray-200 p-6 font-mono text-xs text-gray-700 rounded-sm">
                         <div class="text-center mb-6 border-b border-gray-200 pb-4">
                             <h3 class="text-lg font-bold uppercase tracking-widest text-gray-900">Antigravity Mart</h3>
                             <p>Jl. Coding No. 101, Cloud City</p>
@@ -81,14 +81,14 @@
                         </div>
                     </div>
 
-                    <div class="mt-8 flex gap-4">
-                        <button onclick="window.print()" style="background-color: #374151; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px;" class="no-print hover:opacity-90">
+                    <div class="mt-8 flex gap-4 no-print">
+                        <button onclick="window.print()" style="background-color: #374151; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px;" class="hover:opacity-90">
                             <svg xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                             </svg>
                             Cetak Struk
                         </button>
-                        <a href="{{ route('transactions.index') }}" style="background-color: #4f46e5; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; text-decoration: none; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px;" class="no-print hover:opacity-90">
+                        <a href="{{ route('transactions.index') }}" style="background-color: #4f46e5; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; text-decoration: none; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px;" class="hover:opacity-90">
                             Transaksi Baru
                         </a>
                     </div>
@@ -100,20 +100,25 @@
     <!-- Print styling -->
     <style>
         @media print {
-            body * { visibility: hidden; }
-            .bg-gray-50, .bg-gray-50 * { visibility: visible; }
-            .bg-gray-50 {
+            body * {
+                visibility: hidden;
+            }
+            #receipt-area, #receipt-area * {
+                visibility: visible;
+            }
+            #receipt-area {
                 position: absolute;
-                left: 50%;
+                left: 0;
                 top: 0;
-                transform: translateX(-50%);
-                width: 100% !important;
-                max-width: 80mm !important; /* Standard credit card thermal paper width */
+                width: 100%;
+                max-width: 100%;
                 border: none !important;
                 background-color: white !important;
-                padding: 0 !important;
+                padding: 10px !important;
             }
-            .no-print { display: none !important; }
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </x-app-layout>
