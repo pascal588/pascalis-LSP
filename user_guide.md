@@ -51,3 +51,14 @@ Menampilkan ringkasan statistik:
 -   Sistem menggunakan Middleware `auth` untuk setiap halaman sensitif.
 -   Validasi stok dilakukan secara *real-time* di sisi server saat penambahan item ke cart dan saat checkout.
 -   Pesan sukses/gagal ditampilkan menggunakan komponen Alert yang konsisten.
+
+
+Ringkasan Urutan Cepat (Cheatsheet):
+cp .env.example .env
+composer install
+npm install
+php artisan key:generate
+(Sesuaikan database di .env)
+php artisan migrate
+npm run build
+php artisan serve
