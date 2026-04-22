@@ -8,21 +8,23 @@ use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class TransactionController extends Controller
+class TransaksiController extends Controller
 {
-    public function index()
+    //menampilkan halaman awal transaksi dengan daftar barang//
+    public function indeks()
     {
         $items = Item::where('stock', '>', 0)->get();
-        return view('transactions.index', compact('items'));
+        return view('transaksi.indeks', compact('items'));
     }
 
-    public function addToCart(Request $request)
+    //menambahkan barang ke dalam keranjang belanja//
+    public function tambahKeranjang(Request $request)
     {
         $item = Item::findOrFail($request->item_id);
         $qty = $request->qty ?? 1;
 
         if ($item->stock < $qty) {
-            return back()->with('error', 'Insufficient stock.');
+            return back()->with('error', 'Stok tidak mencukupi.');
         }
 
         $cart = session()->get('cart', []);
@@ -40,17 +42,19 @@ class TransactionController extends Controller
         }
 
         session()->put('cart', $cart);
-        return redirect()->route('transactions.cart')->with('Berhasil', 'Barang Berhasil Ditambahkan Ke Keranjang.');
+        return redirect()->route('transaksi.keranjang')->with('Berhasil', 'Barang Berhasil Ditambahkan Ke Keranjang.');
     }
 
-    public function cart()
+    //menampilkan halaman keranjang belanja beserta rincian subtotal//
+    public function keranjang()
     {
         $cart = session()->get('cart', []);
         $total = array_sum(array_column($cart, 'subtotal'));
-        return view('transactions.cart', compact('cart', 'total'));
+        return view('transaksi.keranjang', compact('cart', 'total'));
     }
 
-    public function removeFromCart($id)
+    //menghapus salah satu barang dari dalam keranjang//
+    public function hapusKeranjang($id)
     {
         $cart = session()->get('cart');
         if (isset($cart[$id])) {
@@ -60,7 +64,8 @@ class TransactionController extends Controller
         return back()->with('Berhasil', 'Barang Berhasil dihapus dari Keranjang.');
     }
 
-    public function checkout(Request $request)
+    //memproses pembayaran dan melakukan pemotongan stok barang//
+    public function bayar(Request $request)
     {
         $cart = session()->get('cart');
         if (!$cart) {
@@ -103,18 +108,20 @@ class TransactionController extends Controller
 
         // Redirect to receipt (show)
         $transaction = Transaction::latest()->first();
-        return redirect()->route('transactions.show', $transaction->id)->with('Berhasil', 'Transaksi Berhasil.');
+        return redirect()->route('transaksi.struk', $transaction->id)->with('Berhasil', 'Transaksi Berhasil.');
     }
 
-    public function history()
+    //menampilkan riwayat list transaksi bagi user bersangkutan//
+    public function riwayat()
     {
         $transactions = Transaction::where('user_id', auth()->id())->latest()->get();
-        return view('transactions.history', compact('transactions'));
+        return view('transaksi.riwayat', compact('transactions'));
     }
 
-    public function show(Transaction $transaction)
+    //menampilkan halaman struk cetak virtual//
+    public function struk(Transaction $transaction)
     {
         $transaction->load('details.item');
-        return view('transactions.show', compact('transaction'));
+        return view('transaksi.struk', compact('transaction'));
     }
 }

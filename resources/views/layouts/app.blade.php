@@ -7,25 +7,47 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+            <!-- Global Toast Notifications -->
+            <div class="fixed top-24 right-6 z-[100] flex flex-col gap-4 max-w-sm w-full">
+                @if(session('success') || session('Berhasil'))
+                    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" 
+                        class="glass-card p-4 flex items-center gap-4 animate-slide-in border-l-4 border-emerald-500 shadow-2xl">
+                        <div class="bg-emerald-100 p-2 rounded-xl text-emerald-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-slate-900">Berhasil!</h4>
+                            <p class="text-xs text-slate-600 font-medium">{{ session('success') ?? session('Berhasil') }}</p>
+                        </div>
+                        <button @click="show = false" class="text-slate-400 hover:text-slate-600 transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
                     </div>
-                </header>
-            @endisset
+                @endif
+
+                @if(session('error') || session('Error'))
+                    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" 
+                        class="glass-card p-4 flex items-center gap-4 animate-slide-in border-l-4 border-rose-500 shadow-2xl">
+                        <div class="bg-rose-100 p-2 rounded-xl text-rose-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-slate-900">Gagal!</h4>
+                            <p class="text-xs text-slate-600 font-medium">{{ session('error') ?? session('Error') }}</p>
+                        </div>
+                        <button @click="show = false" class="text-slate-400 hover:text-slate-600 transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                @endif
+            </div>
 
             <!-- Page Content -->
             <main>

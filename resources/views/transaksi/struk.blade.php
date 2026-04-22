@@ -8,20 +8,21 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
-                <div class="bg-white shadow-xl rounded-lg p-10 w-full max-w-md border border-gray-100">
-                    <div class="text-center mb-8 no-print">
-                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- TAG: Container Struk Diperkecil -->
+                <div class="bg-white shadow-xl rounded-lg p-6 w-[100%] max-w-[380px] border border-gray-100">
+                    <div class="text-center mb-6 no-print">
+                        <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-100 text-green-600 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
                         </div>
-                        <h2 class="text-2xl font-extrabold text-gray-900">Transaction Successful!</h2>
-                        <p class="text-gray-500 text-sm mt-1">Thank you for your purchase.</p>
+                        <h2 class="text-lg font-extrabold text-gray-900">Transaksi Berhasil!</h2>
+                        <p class="text-gray-500 text-xs mt-1">Terima kasih atas pembelian Anda.</p>
                     </div>
 
                     <!-- Virtual Receipt -->
-                    <div id="receipt-area" class="bg-gray-50 border-2 border-dashed border-gray-200 p-6 font-mono text-xs text-gray-700 rounded-sm">
-                        <div class="text-center mb-6 border-b border-gray-200 pb-4">
+                    <div id="receipt-area" class="bg-gray-50 border-2 border-dashed border-gray-200 p-4 font-mono text-[10px] text-gray-700 rounded-sm mx-auto">
+                        <div class="text-center mb-4 border-b border-gray-200 pb-3">
                             <h3 class="text-lg font-bold uppercase tracking-widest text-gray-900">Antigravity Mart</h3>
                             <p>Jl. Coding No. 101, Cloud City</p>
                             <p>Telp: 0812-3456-7890</p>
@@ -88,7 +89,7 @@
                             </svg>
                             Cetak Struk
                         </button>
-                        <a href="{{ route('transactions.index') }}" style="background-color: #4f46e5; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; text-decoration: none; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px;" class="hover:opacity-90">
+                        <a href="{{ route('transaksi.indeks') }}" style="background-color: #4f46e5; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; text-decoration: none; flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px;" class="hover:opacity-90">
                             Transaksi Baru
                         </a>
                     </div>
