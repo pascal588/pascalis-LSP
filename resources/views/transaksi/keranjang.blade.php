@@ -87,17 +87,35 @@
                                     <form action="{{ route('transaksi.bayar') }}" method="POST" class="space-y-6">
                                         @csrf
                                         <div>
-                                            <label for="amount_paid" class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Input Pembayaran</label>
+                                            <label for="amount_paid_display" class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Input Pembayaran</label>
                                             <div class="relative">
                                                 <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                                                     <span class="text-slate-400 font-bold text-sm">Rp</span>
                                                 </div>
-                                                <input type="number" name="amount_paid" id="amount_paid" min="{{ $total }}" 
-                                                    class="input-premium pl-12 text-xl font-black" 
-                                                    required placeholder="0">
+                                                <input type="text" id="amount_paid_display" 
+                                                    class="input-premium text-xl font-bold" 
+                                                    style="padding-left: 4.5rem;"
+                                                    required placeholder="0"
+                                                    oninput="formatRupiah(this)">
+                                                <input type="hidden" name="amount_paid" id="amount_paid_raw">
                                             </div>
-                                            <p class="mt-3 text-[10px] text-slate-400 font-bold italic">* Minimal pembayaran Rp {{ number_format($total, 0, ',', '.') }}</p>
+                                            <p class="mt-3 text-[10px] text-gray-400 font-bold italic">* Minimal pembayaran Rp {{ number_format($total, 0, ',', '.') }}</p>
                                         </div>
+
+                                        <script>
+                                            function formatRupiah(el) {
+                                                let val = el.value.replace(/[^0-9]/g, '');
+                                                if (val === '') {
+                                                    el.value = '';
+                                                    document.getElementById('amount_paid_raw').value = '';
+                                                    return;
+                                                }
+                                                
+                                                let formatted = new Intl.NumberFormat('id-ID').format(val);
+                                                el.value = formatted;
+                                                document.getElementById('amount_paid_raw').value = val;
+                                            }
+                                        </script>
                                         
                                         <button type="submit" class="btn-premium-secondary w-full py-4 shadow-emerald-200 uppercase tracking-widest text-xs">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
